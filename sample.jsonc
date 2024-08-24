@@ -1,0 +1,6 @@
+//path parameter: GET https://api.vcew.ac.in/department/:departmentId/students 
+
+//query parameter:GET https://api.vcew.ac.in/department/:departmentId/students?cgpa=8.0&doy=2004
+
+//[{"name:"lav","roll no":12},{"name:"lav","roll no":12},{"name:"lav","roll no":12}]
+
