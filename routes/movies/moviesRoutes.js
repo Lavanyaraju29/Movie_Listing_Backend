@@ -26,4 +26,51 @@ router.post("/",async(req,res)=>
     }
     });
     
+router.put("/:id",async(req, res) => {
+    try{
+        movieId = req.params.id;
+        const updateMovieData = req.body;
+        await Movie.findByIdAndUpdate(movieId,updateMovieData);
+        res.json({
+            message: "Movie update successfully",
+        });
+    } catch (error){
+        console.log(error);
+        res.status(500).json({
+            message: "Internal server error",
+        });
+    }
+ });
+
+ router.delete("/:id",async(req, res) => {
+    try{
+        movieId = req.params.id;
+        const deleteMovieData = req.body;
+        await Movie.findByIdAndDelete(movieId,deleteMovieData);
+        res.json({
+            message: "Movie deleted successfully",
+        });
+    } catch (error){
+        console.log(error);
+        res.status(500).json({
+            message: "Internal server error",
+        });
+    }
+ });
+
+ router.get("/:id", async (req, res) => {
+    try {
+        const movieId = req.params.id;
+        console.log("Handling the get by id request");
+        const movie = await Movie.findById(movieId);
+        res.json(movie);
+    } catch (error) {
+        if (error.kind === "ObjectId") {
+            res.status(404).json({ message: "Movie not found"});
+        } else {
+        res.status(500).json({ message: "Internal server error"});
+    }
+}
+});
+
 module.exports = router;
