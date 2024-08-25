@@ -2,11 +2,24 @@ const express = require('express');
 const router = express.Router();
 const Movie = require("../../db/schemas/movieSchema");
 
-router.get("/", async(req,res) => {
-    const movies = await Movie.find();
-    res.json(movies);
+
+router.get("/",async (req, res) => {
+    const queryParams = req.query;
+    const filters = {};
+    if(queryParams.name){
+        filters.name = {
+            $regex: `^${queryParams.name}`, $options: "i",
+        }
     }
-);
+    if(queryParams.rating){
+        filters.rating = {
+            $gte: parseFloat(queryParams.rating),
+        };
+    }
+    console.log(filters)
+    const movies = await Movie.find(filters);
+    res.json(movies);
+})
 
 router.post("/",async(req,res)=>
     {
